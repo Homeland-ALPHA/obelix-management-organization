@@ -41,16 +41,12 @@
       "migrations_dir": "worker/migrations"
     }
   ],
-  // Documents live in R2. Disabled until R2 is enabled on the account
-  // (dashboard -> R2 -> enable); until then document endpoints return 503.
-  // To turn on: enable R2, run `npx wrangler r2 bucket create obelix-documents`,
-  // then uncomment this block and redeploy.
-  // "r2_buckets": [
-  //   {
-  //     "binding": "DOCS",
-  //     "bucket_name": "obelix-documents"
-  //   }
-  // ],
+  "r2_buckets": [
+    {
+      "binding": "DOCS",
+      "bucket_name": "obelix-documents"
+    }
+  ],
   "vars": {
     // Comma-separated list of allowed origins, or * to allow any.
     // Irrelevant for the normal single-Worker deploy (same origin).
