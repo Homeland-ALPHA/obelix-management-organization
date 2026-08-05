@@ -5,9 +5,9 @@
   "scripts": {
     "dev": "wrangler dev",
     "build": "node build.mjs --force",
-    "deploy": "wrangler d1 migrations apply obelix --remote && wrangler deploy",
-    "migrate:local": "wrangler d1 migrations apply obelix --local",
-    "migrate:remote": "wrangler d1 migrations apply obelix --remote",
+    "deploy": "wrangler d1 migrations apply obelix-db --remote && wrangler deploy",
+    "migrate:local": "wrangler d1 migrations apply obelix-db --local",
+    "migrate:remote": "wrangler d1 migrations apply obelix-db --remote",
     "typecheck": "npm --prefix worker run typecheck"
   },
   "devDependencies": {

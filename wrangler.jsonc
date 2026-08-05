@@ -34,20 +34,23 @@
   "d1_databases": [
     {
       "binding": "DB",
-      "database_name": "obelix",
-      // Placeholder. The git-connected "Deploy to Cloudflare" flow provisions
-      // a database and replaces this id. For CLI deploys, paste the id from
-      // `wrangler d1 create obelix`.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      // "obelix-db" on this account; the similarly named "obelix" database
+      // holds data from an earlier project iteration and must stay untouched.
+      "database_name": "obelix-db",
+      "database_id": "8242894e-b5a0-480f-9ec6-d0efa292b9b3",
       "migrations_dir": "worker/migrations"
     }
   ],
-  "r2_buckets": [
-    {
-      "binding": "DOCS",
-      "bucket_name": "obelix-documents"
-    }
-  ],
+  // Documents live in R2. Disabled until R2 is enabled on the account
+  // (dashboard -> R2 -> enable); until then document endpoints return 503.
+  // To turn on: enable R2, run `npx wrangler r2 bucket create obelix-documents`,
+  // then uncomment this block and redeploy.
+  // "r2_buckets": [
+  //   {
+  //     "binding": "DOCS",
+  //     "bucket_name": "obelix-documents"
+  //   }
+  // ],
   "vars": {
     // Comma-separated list of allowed origins, or * to allow any.
     // Irrelevant for the normal single-Worker deploy (same origin).

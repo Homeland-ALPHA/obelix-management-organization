@@ -39,10 +39,12 @@ app.use("*", async (c, next) => {
 let schemaReady = false;
 app.use("*", async (c, next) => {
   if (!schemaReady) {
-    const users = await c.env.DB.prepare(
-      "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'users'",
+    // 'records' is distinctive to this schema — 'users' also existed in a
+    // legacy database on the same account, which made it a bad sentinel.
+    const sentinel = await c.env.DB.prepare(
+      "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'records'",
     ).first();
-    if (!users) {
+    if (!sentinel) {
       // Drop full-line comments before splitting: comments may contain ";".
       const statements = schemaSql
         .split("\n")
