@@ -1,0 +1,95 @@
+{
+  "theme": "dark",
+  "typography": {
+    "primary_font": "Cormorant Garamond",
+    "secondary_font": "Inter",
+    "hierarchy": {
+      "h1": "text-5xl sm:text-6xl md:text-7xl font-serif tracking-tight leading-none text-white",
+      "h2": "text-3xl sm:text-4xl font-serif tracking-tight text-white",
+      "h3": "text-xl sm:text-2xl font-sans font-medium tracking-tight text-white",
+      "body": "text-base font-sans text-neutral-400 leading-relaxed",
+      "labels": "text-xs font-sans uppercase tracking-[0.2em] text-neutral-500",
+      "dashboard_data": "text-2xl font-sans font-semibold text-white tracking-tight"
+    }
+  },
+  "colors": {
+    "background": "#0A0A0A",
+    "surface": "#141414",
+    "surface_elevated": "#1E1E1E",
+    "border": "#2A2A2A",
+    "text_primary": "#FFFFFF",
+    "text_secondary": "#A3A3A3",
+    "accent": "#C7A36B",
+    "accent_hover": "#DCC296",
+    "success": "#22C55E",
+    "success_bg": "rgba(34, 197, 94, 0.1)",
+    "error": "#EF4444",
+    "error_bg": "rgba(239, 68, 68, 0.1)"
+  },
+  "visual_enhancers": {
+    "shadows": "Extremely subtle. Drop shadows should only be used to separate overlapping elements, e.g., shadow-[0_8px_32px_rgba(0,0,0,0.4)]. Avoid glowing shadows.",
+    "borders": "Precision is critical. Use 1px solid border-neutral-800 or border-white/10 for cards. Avoid thick borders.",
+    "gradients": "Muted, restrained. Use radial gradients for subtle spotlight effects behind key components (e.g., behind the hero dashboard), not as full backgrounds.",
+    "glassmorphism": "Used sparingly. Mostly for the sticky navigation (backdrop-blur-md bg-black/70) to keep the page professional. Do NOT use completely transparent backgrounds where text readability might suffer."
+  },
+  "grids": {
+    "bento": "Asymmetrical grids for feature cards. Strict, dense grids for dashboard mockups mimicking a control center.",
+    "dashboard_mockup": "High density grid, gap-4, precise alignments. No wasted space, mimicking Palantir/Linear."
+  },
+  "layouts": {
+    "hero": "Center-aligned text overlaying a subtle NYC skyline with heavy overlay, leading into a dense, realistic dashboard mockup.",
+    "sections": "Wide, generous padding between sections (py-24 to py-32).",
+    "dashboard_previews": "Tight technical layout. Mimic real interfaces with sidebars, headers, and precise data tables."
+  },
+  "motion": {
+    "reveal": "Subtle fade up (opacity 0 to 1, y 20 to 0) on scroll using framer-motion.",
+    "hover": "Minimalist. Borders lighten slightly (border-neutral-600), background shifts slightly, text color brightens. No bouncy scaling."
+  },
+  "accessibility": {
+    "contrast": "Ensure text meets APCA standards. Muted gold on dark background needs careful contrast check.",
+    "focus": "Focus rings should be 2px solid muted gold, offset by 2px (focus:ring-2 focus:ring-[#C7A36B] focus:ring-offset-2 focus:ring-offset-[#0A0A0A])."
+  },
+  "media": {
+    "hero_bg": {
+      "url": "https://images.unsplash.com/photo-1541336032412-2048a678540d",
+      "description": "Empire State building at night for hero background. Must have a heavy black gradient overlay (e.g., from-black via-black/80 to-black/40) so text is 100% readable."
+    },
+    "owner_reporting": {
+      "url": "https://images.unsplash.com/photo-1687367480117-f4119095b502",
+      "description": "Monochromatic view of city from a high rise, to accompany the owner reporting section."
+    },
+    "data_abstraction": {
+      "url": "https://images.unsplash.com/photo-1518636693090-8407756ab88b",
+      "description": "Abstract gold data dots to be used subtly in the fragmented-sources-to-central-platform visual section."
+    }
+  },
+  "component_instructions": {
+    "Navigation": "Sticky nav, backdrop-blur-md bg-[#0A0A0A]/80. Logo 'Obelix' in serif font. Links in small sans text. Include 'Book a Demo' CTA in muted gold.",
+    "Dashboard_Cards": "Use div components acting as cards with extreme restraint. bg-[#141414], border border-[#2A2A2A], rounded-sm. Padding should be precise.",
+    "Today_Priorities_Table": "Dense, realistic HTML table or Shadcn Table. Status badges with muted green/red text and 10% opacity backgrounds. Include working interactive filters.",
+    "Violation_Workflow": "7-step horizontal timeline on desktop, vertical on mobile. Use muted gold for active step, neutral-600 for inactive. Connected by thin 1px lines. Include a violation detail panel.",
+    "Mobile_Interface": "Mockup of a phone showing a work-order/property manager interface. Use tight spacing and smaller fonts.",
+    "Comparison_Table": "Clean grid, showing Obelix vs 'Fragmented Tools'. Use muted gold checks.",
+    "Early_Access_Form": "Shadcn input/form components. Minimalist styling: sharp corners, thin borders, focus states in gold. Form must be frontend-only with instant confirmation state."
+  },
+  "instructions_to_main_agent": [
+    "You are building a premium SaaS landing page for institutional real estate. Think BlackRock meets Linear. It must NOT look like a generic template.",
+    "The hero must feature a REALISTIC dashboard mockup built with HTML/Tailwind. It needs to look like a functional app (12 Buildings / 192 Units / 96.4% Rent Collected).",
+    "Use 'Cormorant Garamond' for the main impressive headlines and 'Inter' for all the dashboard UI and body text. Load these fonts from Google Fonts.",
+    "Do NOT use heavy gradients or bright neon colors. Stick strictly to the charcoal, slate, and muted gold palette.",
+    "Include 'data-testid' on all interactive elements to facilitate testing.",
+    "Ensure all dashboard mockups have realistic NYC real estate data (e.g., '192 Units', 'HPD Violation #40291', 'DOB Compliance'). No lorem ipsum.",
+    "Use Phosphor icons or Lucide icons with a thin stroke (1.5) to keep the premium technical feel.",
+    "Implement the interactive tabs/filters for the Today's Priorities table and the approval buttons in the owner reporting mockup.",
+    "Build a custom visual for 'fragmented-sources-to-central-platform' showing data flowing into Obelix.",
+    "The final CTA is a working frontend-only form. When submitted, it should swap to a clean confirmation message."
+  ],
+  "UNIVERSAL_GUIDELINES_FOR_MAIN_AGENT": [
+    "Prioritize optical alignment over geometric alignment.",
+    "Create depth through layered design elements with z-index hierarchy, using borders and surface colors, not heavy shadows.",
+    "Every interaction needs micro-animations - hover states, transitions (e.g., transition-colors duration-200). Static = dead.",
+    "Use 2-3x more spacing between major sections (e.g., py-24 or py-32).",
+    "Subtle grain textures, custom cursors, and precise selection states separate good from extraordinary.",
+    "Never use AI assistant Emoji characters (like 🤖, 💡, 🚀) as icons."
+  ]
+}

@@ -1,0 +1,175 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    /* Dark is the default theme. Channel triplets (r g b) so Tailwind alpha
+       modifiers keep working: rgb(var(--x) / <alpha-value>). */
+    :root {
+        color-scheme: dark;
+
+        --ink: 10 10 10;
+        --panel: 16 16 16;
+        --sidebar: 13 13 12;
+        --surface: 20 20 20;
+        --elevated: 30 30 30;
+        --line: 42 42 42;
+        --line-strong: 82 82 82;
+
+        --text-strong: 255 255 255;
+        --text-body: 235 235 235;
+        --text-mid: 163 163 163;
+        --text-dim: 115 115 115;
+        --text-faint: 82 82 82;
+
+        /* neutral overlay tint for hovers/badges: white on dark, black on light */
+        --tint: 255 255 255;
+
+        --gold: 199 163 107;
+        --gold-hover: 220 194 150;
+        --gold-dim: rgba(199, 163, 107, 0.12);
+
+        --ok: 34 197 94;
+        --alert: 239 68 68;
+
+        --shadow-pop: 0 24px 60px -12px rgba(0, 0, 0, 0.9);
+        --shadow-modal: 0 32px 90px -20px rgba(0, 0, 0, 0.95);
+
+        --background: 0 0% 3.9%;
+        --foreground: 0 0% 98%;
+        --card: 0 0% 8%;
+        --card-foreground: 0 0% 98%;
+        --popover: 0 0% 8%;
+        --popover-foreground: 0 0% 98%;
+        --primary: 38 42% 60%;
+        --primary-foreground: 0 0% 6%;
+        --secondary: 0 0% 12%;
+        --secondary-foreground: 0 0% 98%;
+        --muted: 0 0% 12%;
+        --muted-foreground: 0 0% 64%;
+        --accent: 0 0% 14%;
+        --accent-foreground: 0 0% 98%;
+        --destructive: 0 84% 60%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 0 0% 16.5%;
+        --input: 0 0% 16.5%;
+        --ring: 38 42% 60%;
+        --radius: 0.25rem;
+    }
+
+    /* Light theme — warm paper neutrals to suit the gold/serif brand. */
+    .light {
+        color-scheme: light;
+
+        --ink: 246 245 243;
+        --panel: 255 255 255;
+        --sidebar: 250 249 247;
+        --surface: 241 240 237;
+        --elevated: 232 230 226;
+        --line: 224 221 215;
+        --line-strong: 178 173 164;
+
+        --text-strong: 20 20 20;
+        --text-body: 38 38 38;
+        --text-mid: 89 89 89;
+        --text-dim: 110 106 99;
+        --text-faint: 160 155 146;
+
+        --tint: 0 0 0;
+
+        --gold: 143 107 52;
+        --gold-hover: 122 90 40;
+        --gold-dim: rgba(143, 107, 52, 0.1);
+
+        --ok: 21 128 61;
+        --alert: 201 42 42;
+
+        --shadow-pop: 0 16px 40px -12px rgba(30, 22, 8, 0.18);
+        --shadow-modal: 0 24px 70px -20px rgba(30, 22, 8, 0.22);
+
+        --background: 40 14% 96%;
+        --foreground: 0 0% 8%;
+        --card: 0 0% 100%;
+        --card-foreground: 0 0% 8%;
+        --popover: 0 0% 100%;
+        --popover-foreground: 0 0% 8%;
+        --primary: 38 47% 38%;
+        --primary-foreground: 40 20% 97%;
+        --secondary: 40 8% 92%;
+        --secondary-foreground: 0 0% 10%;
+        --muted: 40 8% 92%;
+        --muted-foreground: 0 0% 40%;
+        --accent: 40 8% 90%;
+        --accent-foreground: 0 0% 10%;
+        --destructive: 0 66% 48%;
+        --destructive-foreground: 0 0% 98%;
+        --border: 40 10% 86%;
+        --input: 40 10% 86%;
+        --ring: 38 47% 38%;
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+    html {
+        scroll-behavior: smooth;
+        scroll-padding-top: 5rem;
+    }
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        @apply bg-ink text-strong font-sans;
+    }
+    ::selection {
+        background: rgb(var(--gold) / 0.28);
+        color: rgb(var(--text-strong));
+    }
+    :focus-visible {
+        outline: 2px solid rgb(var(--gold));
+        outline-offset: 2px;
+        border-radius: 2px;
+    }
+}
+
+@layer utilities {
+    .label-xs {
+        @apply text-[10px] font-sans uppercase tracking-[0.22em] text-dim;
+    }
+    .hairline {
+        @apply border border-line;
+    }
+    .grain::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.035;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='120' height='120' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .grid-lines {
+        background-image:
+            linear-gradient(to right, rgba(255, 255, 255, 0.028) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(255, 255, 255, 0.028) 1px, transparent 1px);
+        background-size: 72px 72px;
+    }
+    .light .grid-lines {
+        background-image:
+            linear-gradient(to right, rgba(0, 0, 0, 0.035) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(0, 0, 0, 0.035) 1px, transparent 1px);
+    }
+    .tnum {
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] {
+        display: contents !important;
+    }
+}

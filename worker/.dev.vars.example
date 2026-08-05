@@ -1,0 +1,5 @@
+# Copy to .dev.vars for local `wrangler dev`.
+# Generate a long random string for production (wrangler secret put JWT_SECRET).
+JWT_SECRET=obelix-dev-secret
+# Optional: NYC Open Data app token to raise Socrata rate limits.
+# NYC_APP_TOKEN=
