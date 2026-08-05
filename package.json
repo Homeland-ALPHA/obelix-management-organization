@@ -1,0 +1,16 @@
+{
+  "name": "obelix",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "node build.mjs --force",
+    "deploy": "wrangler d1 migrations apply obelix --remote && wrangler deploy",
+    "migrate:local": "wrangler d1 migrations apply obelix --local",
+    "migrate:remote": "wrangler d1 migrations apply obelix --remote",
+    "typecheck": "npm --prefix worker run typecheck"
+  },
+  "devDependencies": {
+    "wrangler": "4.86.0"
+  }
+}

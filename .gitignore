@@ -92,8 +92,8 @@ credentials.json
 frontend/node_modules/.cache/default-development/2.pack
 
 # Cloudflare Worker
-worker/.wrangler/
-worker/.dev.vars
+.wrangler/
+.dev.vars
 
 # Tracked env templates (exceptions to the .env.* rule above)
 !.env.example

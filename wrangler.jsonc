@@ -1,0 +1,56 @@
+// Cloudflare Workers configuration (repo root, so git-connected builds and
+// `npx wrangler deploy` work with no extra settings).
+//
+// One Worker serves both the API (worker/src, owns /api/*) and the built
+// React frontend (frontend/build, SPA fallback). The `build.command` hook
+// installs worker deps and compiles the frontend automatically before every
+// deploy; locally it skips if frontend/build already exists.
+//
+// Resources (create once — the git-connected "Deploy to Cloudflare" flow can
+// provision these automatically from the bindings below):
+//   wrangler d1 create obelix          -> paste database_id below if deploying via CLI
+//   wrangler r2 bucket create obelix-documents
+//   wrangler secret put JWT_SECRET
+//   npm run migrate:remote             (after the database exists)
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "obelix",
+  "main": "worker/src/index.ts",
+  "compatibility_date": "2025-06-01",
+  "build": {
+    "command": "node build.mjs",
+    "cwd": ".",
+    "watch_dir": "worker/src"
+  },
+  "assets": {
+    "directory": "frontend/build",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api", "/api/*"]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "obelix",
+      // Placeholder. The git-connected "Deploy to Cloudflare" flow provisions
+      // a database and replaces this id. For CLI deploys, paste the id from
+      // `wrangler d1 create obelix`.
+      "database_id": "00000000-0000-0000-0000-000000000000",
+      "migrations_dir": "worker/migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "DOCS",
+      "bucket_name": "obelix-documents"
+    }
+  ],
+  "vars": {
+    // Comma-separated list of allowed origins, or * to allow any.
+    // Irrelevant for the normal single-Worker deploy (same origin).
+    "CORS_ORIGINS": "*"
+  },
+  "observability": {
+    "enabled": true
+  }
+}
