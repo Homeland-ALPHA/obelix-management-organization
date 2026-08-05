@@ -294,7 +294,10 @@ entities.get("/documents", async (c) => {
   );
 });
 
+const R2_MISSING = "Document storage is not configured (enable R2 and add the DOCS bucket binding)";
+
 entities.post("/documents", async (c) => {
+  if (!c.env.DOCS) return c.json({ detail: R2_MISSING }, 503);
   const user = c.get("user");
   const form = await c.req.formData().catch(() => null);
   const file = (form?.get("file") ?? null) as unknown;
@@ -341,6 +344,7 @@ entities.post("/documents", async (c) => {
 });
 
 entities.get("/documents/:docId/download", async (c) => {
+  if (!c.env.DOCS) return c.json({ detail: R2_MISSING }, 503);
   const user = c.get("user");
   const row = await c.env.DB.prepare("SELECT r2_key, data FROM documents WHERE id = ? AND user_id = ?")
     .bind(c.req.param("docId"), user.id)
@@ -365,7 +369,7 @@ entities.delete("/documents/:docId", async (c) => {
   if (!row) return c.json({ detail: "Document not found" }, 404);
   const doc = JSON.parse(row.data as string);
   try {
-    await c.env.DOCS.delete(row.r2_key as string);
+    await c.env.DOCS?.delete(row.r2_key as string);
   } catch {
     // metadata cleanup still proceeds
   }

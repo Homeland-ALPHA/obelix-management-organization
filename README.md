@@ -38,25 +38,21 @@ Cloudflare as-is and how each piece was mapped.
 Connect the repo in the dashboard (Workers & Pages → Create → import this
 repository). The defaults work: no build command needed, deploy command
 `npx wrangler deploy` — [build.mjs](build.mjs) compiles the frontend
-automatically inside the deploy. The flow can provision the D1 database and
-R2 bucket declared in [wrangler.jsonc](wrangler.jsonc); if the deploy errors
-about a missing `database_id`, create the resources once (steps 1–2 below)
-and paste the id.
+automatically inside the deploy, and the Worker creates its database schema
+on first request (no migration step).
 
-Two one-time steps after the first successful deploy:
+One-time account setup the flow cannot do for you:
 
-1. Apply the schema (or set the project's deploy command to `npm run deploy`,
-   which migrates before every deploy):
-
-```bash
-npx wrangler d1 migrations apply obelix --remote
-```
-
-2. Set a real JWT secret (any long random string):
-
-```bash
-npx wrangler secret put JWT_SECRET
-```
+1. **Enable R2** in the dashboard (R2 → enable; the free tier is fine) —
+   without it the deploy fails with error 10042. Then create the bucket:
+   `npx wrangler r2 bucket create obelix-documents` (or dashboard → R2 →
+   Create bucket). Alternatively, delete the `r2_buckets` block from
+   [wrangler.jsonc](wrangler.jsonc) to deploy without documents support.
+2. **Create the D1 database** if the flow didn't provision one —
+   `npx wrangler d1 create obelix` (or dashboard → D1) — and replace the
+   placeholder `database_id` in [wrangler.jsonc](wrangler.jsonc).
+3. **Set a real JWT secret** (any long random string):
+   `npx wrangler secret put JWT_SECRET`.
 
 ### Option B — CLI from your machine
 
@@ -86,7 +82,8 @@ npx wrangler r2 bucket create obelix-documents
 npx wrangler secret put JWT_SECRET
 ```
 
-4. **Migrate and deploy** (builds the frontend automatically):
+4. **Deploy** (builds the frontend automatically; the schema is created on
+   first request, and `npm run deploy` also applies migrations explicitly):
 
 ```bash
 npm run deploy
@@ -111,12 +108,11 @@ npm install && cp .dev.vars.example .dev.vars
 ```
 
 ```bash
-npm run migrate:local
-```
-
-```bash
 npm run dev
 ```
+
+(The schema is created automatically on the first request;
+`npm run migrate:local` also works if you prefer explicit migrations.)
 
 That serves http://localhost:8787 — API and app together. The first run
 builds the frontend automatically; later runs reuse `frontend/build`

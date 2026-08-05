@@ -8,6 +8,7 @@
  */
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import schemaSql from "../migrations/0001_init.sql";
 import { ApiError } from "./lib/db";
 import { requireUser } from "./security";
 import type { AppEnv } from "./types";
@@ -29,6 +30,32 @@ app.use("*", async (c, next) => {
     allowHeaders: ["Authorization", "Content-Type"],
   });
   return handler(c, next);
+});
+
+// Schema auto-bootstrap: on a fresh database, create the tables from the
+// migration file (all DDL is IF NOT EXISTS, so this coexists with
+// `wrangler d1 migrations apply` and is safe under concurrent cold starts).
+// Removes the manual migration step from first deploys.
+let schemaReady = false;
+app.use("*", async (c, next) => {
+  if (!schemaReady) {
+    const users = await c.env.DB.prepare(
+      "SELECT name FROM sqlite_master WHERE type = 'table' AND name = 'users'",
+    ).first();
+    if (!users) {
+      // Drop full-line comments before splitting: comments may contain ";".
+      const statements = schemaSql
+        .split("\n")
+        .filter((line) => !line.trim().startsWith("--"))
+        .join("\n")
+        .split(";")
+        .map((s) => s.trim())
+        .filter(Boolean);
+      await c.env.DB.batch(statements.map((s) => c.env.DB.prepare(s)));
+    }
+    schemaReady = true;
+  }
+  await next();
 });
 
 app.get("/", (c) => c.json({ message: "Obelix Property Management API", status: "ok" }));

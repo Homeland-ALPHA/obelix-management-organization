@@ -14,9 +14,12 @@
 //   npm run migrate:remote             (after the database exists)
 {
   "$schema": "node_modules/wrangler/config-schema.json",
-  "name": "obelix",
+  // Matches the Worker created by the git-connected deploy flow.
+  "name": "obelix-management-organization",
   "main": "worker/src/index.ts",
   "compatibility_date": "2025-06-01",
+  // Lets the Worker import the migration .sql as text (schema auto-bootstrap).
+  "rules": [{ "type": "Text", "globs": ["**/*.sql"], "fallthrough": true }],
   "build": {
     "command": "node build.mjs",
     "cwd": ".",

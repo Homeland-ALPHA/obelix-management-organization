@@ -1,6 +1,8 @@
 export type Env = {
   DB: D1Database;
-  DOCS: R2Bucket;
+  // Optional so the app still deploys (documents disabled with a clear 503)
+  // if the r2_buckets binding is removed on accounts without R2 enabled.
+  DOCS?: R2Bucket;
   ASSETS: Fetcher;
   JWT_SECRET?: string;
   NYC_APP_TOKEN?: string;
